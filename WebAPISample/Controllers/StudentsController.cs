@@ -47,6 +47,10 @@ namespace WebAPISample.Controllers
         // GET api/values/5
         public Student Get(int id)
         {
+            // Input validation
+            if (id < 0)
+                return null;
+
             var list = ReadStudentsFromFile();
 
             // Make sure that the Student number exists
@@ -59,6 +63,12 @@ namespace WebAPISample.Controllers
         // POST api/values
         public void Post([FromBody]Student student)
         {
+            // Input validation
+            if (student == null)
+                return;
+            if (string.IsNullOrEmpty(student.Name))
+                return;
+
             StoreNewStudent(student);
         }
 
