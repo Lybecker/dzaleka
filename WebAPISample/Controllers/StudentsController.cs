@@ -45,19 +45,19 @@ namespace WebAPISample.Controllers
         }
 
         // GET api/values/5
-        public Student Get(int id)
+        public IHttpActionResult Get(int id)
         {
             // Input validation
             if (id < 0)
-                return null;
+                return this.BadRequest("Hey! We do not accept negative numbers!");
 
             var list = ReadStudentsFromFile();
 
             // Make sure that the Student number exists
             if (list.Count < id)
-                return list[id];
+                return this.Ok(list[id]);
             else
-                return null;
+                return this.NotFound();
         }
 
         // POST api/values
