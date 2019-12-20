@@ -4,8 +4,8 @@ namespace AnonymousFunctions
 {
     class Program
     {
-        delegate void TestDelegate(string s);
-        static void M(string s)
+        public delegate void TestDelegate(string s);
+        static void MyWriteLine(string s)
         {
             Console.WriteLine(s);
         }
@@ -14,7 +14,7 @@ namespace AnonymousFunctions
         {
             // Original delegate syntax required 
             // initialization with a named method.
-            TestDelegate testDelA = new TestDelegate(M);
+            TestDelegate testDelA = new TestDelegate(MyWriteLine);
 
             // C# 2.0: A delegate can be initialized with
             // inline code, called an "anonymous method." This
@@ -31,9 +31,18 @@ namespace AnonymousFunctions
             testDelB("That's nothing. I'm anonymous and ");
             testDelC("I'm a famous author.");
 
+
+            // using a delegate as a function parameter
+            MyFunction(testDelC, "Hello World");
+
             // Keep console window open in debug mode.
             Console.WriteLine("Press any key to exit.");
             Console.ReadKey();
+        }
+
+        public static void MyFunction(TestDelegate del, string text)
+        {
+            del.Invoke(text);
         }
     }
 }
